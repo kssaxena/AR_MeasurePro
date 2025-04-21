@@ -3,13 +3,11 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import http from "http";
 
-const allowedOrigins = [
-  process.env.ORIGIN_1,
-];
+const allowedOrigins = [process.env.ORIGIN_1];
 
 const app = express();
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
 const corsOptions = {
   origin: allowedOrigins,
@@ -39,6 +37,5 @@ import userRouter from "./routes/user.routes.js";
 
 //vendor routes
 app.use("/api/v1/users", userRouter);
-
 
 export { app };
