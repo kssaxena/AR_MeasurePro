@@ -3,7 +3,7 @@ import axios from "axios";
 export const FetchData = async (
   url: string,
   method: string,
-  data: {},
+  data: {} ,
   file: boolean = false
 ) => {
   const Base_URL: string = `${process.env.DomainUrl}/api/v1`;
@@ -28,7 +28,7 @@ export const FetchData = async (
     return response;
   } else if (method === "post") {
     const response = await axios.post(`${Base_URL}/${url}`, data, options);
-    console.log(Base_URL);
+    // console.log(Base_URL);
     return response;
   } else if (method === "delete") {
     const response = await axios.delete(`${Base_URL}/${url}`, options);

@@ -1,8 +1,13 @@
 import React, { useRef } from "react";
 import { FetchData } from "@/services/FetchFromAPI";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser, clearUser } from "@/Utils/Slice/UserInfoSlice";
 
 const Register = () => {
   const formRef = useRef(null);
+  const navigate = useNavigate();
+  const Dispatch = useDispatch();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -18,6 +23,16 @@ const Register = () => {
         // true
       );
       console.log(response);
+      localStorage.clear(); // will clear the all the data from localStorage
+      localStorage.setItem("AccessToken", response.data.data.token.AccessToken);
+      localStorage.setItem(
+        "RefreshToken",
+        response.data.data.token.RefreshToken
+      );
+      Dispatch(clearUser());
+      Dispatch(addUser(response.data.data.user));
+      navigate("/");
+      alert(response.data.message);
       alert(
         "Please wait until our team completes the verification process. Please try logging in again."
       );
