@@ -21,16 +21,17 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, number, password } = req.body;
+  console.log(name, number, password);
 
-  if (!name || !email || !password) {
+  if (!name || !number || !password) {
     throw new ApiError(400, "Please provide all required fields");
   }
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ number });
   if (existingUser) {
     throw new ApiError(400, "User already exists");
   }
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ name, number, password });
   const { AccessToken, RefreshToken } = await generateAccessAndRefreshTokens(
     user._id
   );

@@ -5,6 +5,10 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "esnext", // or "commonjs" depending on your setup
+    "target": "es6", // or higher
+    "checkJs": false, // optional: prevents TS checking JS files
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

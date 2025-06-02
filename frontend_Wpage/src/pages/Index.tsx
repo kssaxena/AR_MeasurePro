@@ -1,4 +1,3 @@
-
 import { MeasureDisplay } from "@/components/MeasureDisplay";
 
 const Index = () => {
