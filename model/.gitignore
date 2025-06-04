@@ -134,3 +134,6 @@ Pipfile
 Pipfile.lock
 media/Input_image/
 media/Output_image/
+
+# // this is for virtual environment 
+wow 

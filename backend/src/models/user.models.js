@@ -17,6 +17,30 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    images: [
+      {
+        raw: {
+          url: {
+            type: String,
+            required: true,
+          },
+          fileId: {
+            type: String,
+            required: true,
+          },
+        },
+        processed: {
+          url: {
+            type: String,
+            required: true,
+          },
+          fileId: {
+            type: String,
+            required: true,
+          },
+        },
+      },
+    ],
   },
   {
     timestamps: true,
