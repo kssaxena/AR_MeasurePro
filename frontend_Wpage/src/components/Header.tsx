@@ -15,7 +15,9 @@ const Header = () => {
         <Login />
         <button
           className="hover:text-blue-500 hover:underline"
-          onClick={() => setIsRegister(true)}
+          onClick={() => {
+            setIsRegister(true), setIsLogin(false);
+          }}
         >
           to register, click here
         </button>

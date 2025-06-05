@@ -3,6 +3,8 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { UploadImages } from "../utils/imageKit.io.js";
+import { raw } from "express";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -137,4 +139,47 @@ const regenerateRefreshToken = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerUser, loginUser, LogOutUser, regenerateRefreshToken };
+const RawImageUpload = asyncHandler(async (req, res) => {
+  const ImageFile = req.file;
+
+  if (!ImageFile) {
+    throw new ApiError(400, "Please provide an image file");
+  }
+
+  const user = await User.findById(req.user._id);
+  console.log(user);
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  const UploadedImage = await UploadImages(ImageFile.filename, {
+    folderStructure: `users/${req.user.name.split(" ").join("-")}/raw-images`,
+  });
+  user.images.push({
+    raw: {
+      url: UploadedImage.url,
+      fileId: UploadedImage.fileId,
+    },
+  });
+  await user.save();
+
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        success: true,
+        message: "Images added successfully",
+        data: user,
+      },
+      "Image added successfully for measurement"
+    )
+  );
+});
+
+export {
+  registerUser,
+  loginUser,
+  LogOutUser,
+  regenerateRefreshToken,
+  RawImageUpload,
+};

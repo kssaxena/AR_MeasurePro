@@ -22,21 +22,21 @@ const userSchema = new mongoose.Schema(
         raw: {
           url: {
             type: String,
-            required: true,
+            // required: true,
           },
           fileId: {
             type: String,
-            required: true,
+            // required: true,
           },
         },
         processed: {
           url: {
             type: String,
-            required: true,
+            // required: true,
           },
           fileId: {
             type: String,
-            required: true,
+            // required: true,
           },
         },
       },
