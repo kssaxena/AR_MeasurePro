@@ -137,3 +137,7 @@ media/Output_image/
 
 # // this is for virtual environment 
 wow 
+
+
+# this is the temporary file to store the image file for processing
+uploads

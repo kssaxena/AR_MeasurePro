@@ -7,7 +7,7 @@ from routes.users_routes import user_blueprint  # Flask equivalent of user.route
 app = Flask(__name__, static_folder="public", static_url_path="/public")
 
 # Configure CORS (similar to corsOptions in Express)
-allowed_origins = [os.getenv("ORIGIN_1")]
+allowed_origins = [os.getenv("ORIGIN_2")]
 CORS(app, origins=allowed_origins, supports_credentials=True,
      methods=["GET", "POST", "PUT", "DELETE"],
      allow_headers=["Content-Type", "Authorization"])

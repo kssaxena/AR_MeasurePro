@@ -5,6 +5,7 @@ import Jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { UploadImages } from "../utils/imageKit.io.js";
 import { raw } from "express";
+import axios from "axios";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -160,8 +161,29 @@ const RawImageUpload = asyncHandler(async (req, res) => {
       url: UploadedImage.url,
       fileId: UploadedImage.fileId,
     },
+    // output: {
+    //   measurement: Model_Response.data,
+    // },
   });
   await user.save();
+
+  const Model_Response = await axios.post(
+    `${process.env.MEASUREMENT_SERVICE_URL}/api/v1/users/image-analysis`,
+    {
+      userId: user._id,
+      imageUrl: UploadedImage.url,
+      fileId: UploadedImage.fileId,
+    }
+  );
+  // user.images.push({
+  //   output: {
+  //     measurement: Model_Response.data,
+  //   },
+  // });
+  const lastImageIndex = user.images.length - 1;
+  user.images[lastImageIndex].output.measurement = Model_Response.data;
+  await user.save();
+  console.log(Model_Response.data);
 
   res.status(200).json(
     new ApiResponse(

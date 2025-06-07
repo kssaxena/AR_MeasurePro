@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema(
             // required: true,
           },
         },
+        output: {
+          measurement: {
+            type: Object,
+            // required:true
+          },
+        },
       },
     ],
   },
