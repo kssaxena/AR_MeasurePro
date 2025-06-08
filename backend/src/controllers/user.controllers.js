@@ -30,6 +30,9 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!name || !number || !password) {
     throw new ApiError(400, "Please provide all required fields");
   }
+  if (number.length !== 10) {
+    throw new ApiError(400, "Number must be 10 digits long");
+  }
   const existingUser = await User.findOne({ number });
   if (existingUser) {
     throw new ApiError(400, "User already exists");
@@ -64,9 +67,15 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!number || !password) {
     throw new ApiError(400, "Please provide all required fields");
   }
+  if (number.length !== 10) {
+    throw new ApiError(
+      400,
+      "Incorrect credentials, contact number must be 10 digits"
+    );
+  }
   const user = await User.findOne({ number });
 
-  if (!user) throw new ApiError(404, "Provided number is not found");
+  if (!user) throw new ApiError(404, "Invalid contact number");
 
   const isValid = await user.isPasswordCorrect(password);
 
@@ -89,7 +98,7 @@ const loginUser = asyncHandler(async (req, res) => {
             RefreshToken,
           },
         },
-        "User Logged In successfully"
+        "You are Logged In successfully"
       )
     );
 });
@@ -191,7 +200,7 @@ const RawImageUpload = asyncHandler(async (req, res) => {
       {
         success: true,
         message: "Images added successfully",
-        data: user,
+        data: user.images[lastImageIndex],
       },
       "Image added successfully for measurement"
     )

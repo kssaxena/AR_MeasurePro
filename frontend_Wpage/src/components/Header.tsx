@@ -7,7 +7,7 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const user = useSelector((store) => store.UserInfo.user);
-  console.log(user);
+  // console.log(user);
 
   const HandleLoginPopUp = () => {
     return (

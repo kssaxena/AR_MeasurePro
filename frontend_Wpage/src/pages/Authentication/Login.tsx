@@ -1,4 +1,5 @@
 import { FetchData } from "@/services/FetchFromAPI";
+import { parseErrorMessage } from "@/Utils/ErrorMessageParser";
 import { addUser, clearUser } from "@/Utils/Slice/UserInfoSlice";
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -18,7 +19,7 @@ const Login = () => {
 
     try {
       const response = await FetchData("users/login", "post", formData);
-      console.log(response);
+      // console.log(response);
       localStorage.clear(); // will clear the all the data from localStorage
       localStorage.setItem(
         "AccessToken",
@@ -37,7 +38,7 @@ const Login = () => {
     } catch (err) {
       console.log(err);
       // alert(parseErrorMessage(error.response.data.data.statusCode));
-      // alert(parseErrorMessage(err.response.data));
+      alert(parseErrorMessage(err.response.data));
     }
   };
 

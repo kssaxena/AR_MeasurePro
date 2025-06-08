@@ -114,6 +114,6 @@ def process_image(image_path, pixels_per_cm=10.0):
     return {
         "total_objects": detected_objects,
         "average_accuracy": avg_accuracy,
-        "results": results,
-        "image": image
+        "results": results
+        # "image": image
     }

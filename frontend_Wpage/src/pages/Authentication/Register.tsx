@@ -3,6 +3,7 @@ import { FetchData } from "@/services/FetchFromAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser, clearUser } from "@/Utils/Slice/UserInfoSlice";
+import { parseErrorMessage } from "@/Utils/ErrorMessageParser";
 
 const Register = () => {
   const formRef = useRef(null);
@@ -22,22 +23,26 @@ const Register = () => {
         formData
         // true
       );
-      console.log(response);
+      // console.log(response);
       localStorage.clear(); // will clear the all the data from localStorage
-      localStorage.setItem("AccessToken", response.data.data.token.AccessToken);
+      localStorage.setItem(
+        "AccessToken",
+        response.data.data.tokens.AccessToken
+      );
       localStorage.setItem(
         "RefreshToken",
-        response.data.data.token.RefreshToken
+        response.data.data.tokens.RefreshToken
       );
       Dispatch(clearUser());
       Dispatch(addUser(response.data.data.user));
       navigate("/");
-      alert(response.data.message);
-      alert(
-        "Please wait until our team completes the verification process. Please try logging in again."
-      );
+      // alert(response.data.message);
+      alert("Registered successfully ");
+      window.location.reload();
     } catch (err) {
       console.log(err);
+      alert(parseErrorMessage(err.response?.data));
+      window.location.reload();
     }
     console.log("Form submitted");
   };
