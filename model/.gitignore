@@ -141,3 +141,7 @@ wow
 
 # this is the temporary file to store the image file for processing
 uploads
+
+# this is the temporary file to store the image file after processing
+processed_previews
+
