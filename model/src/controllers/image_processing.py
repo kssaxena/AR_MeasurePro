@@ -101,13 +101,13 @@ def process_image(image_path, pixels_per_cm=10.0):
         detected_objects += 1
 
         results.append({
-            "Object #": i + 1,
+            "Object_number": i + 1,
             "Shape": shape_type,
-            "Length (cm)": max(width_cm, height_cm),
-            "Breadth (cm)": min(width_cm, height_cm),
-            "Area (cm²)": round(width_cm * height_cm, 2),
-            "Perimeter (cm)": round(2 * (width_cm + height_cm), 2),
-            "Accuracy (%)": accuracy
+            "Length": max(width_cm, height_cm),
+            "Breadth": min(width_cm, height_cm),
+            "Area": round(width_cm * height_cm, 2),
+            "Perimeter": round(2 * (width_cm + height_cm), 2),
+            "Accuracy": accuracy
         })
 
     avg_accuracy = total_accuracy / detected_objects if detected_objects > 0 else 0
