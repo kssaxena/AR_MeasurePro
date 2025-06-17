@@ -12,9 +12,9 @@ imagekit = ImageKit(
     url_endpoint=os.getenv("imageKit_Url_Endpoint"),
 )
 
-def upload_image(image_path, image_name, folder_structure="/"):
+def upload_image(processed_image_path, image_name, folder_structure="/"):
     try:
-        with open(image_path, "rb") as f:
+        with open(processed_image_path, "rb") as f:
             file_data = f.read()
 
         upload_options = UploadFileRequestOptions(
@@ -30,7 +30,7 @@ def upload_image(image_path, image_name, folder_structure="/"):
         )
 
         # Delete the local file after upload
-        os.remove(image_path)
+        os.remove(processed_image_path)
 
         return result.response_metadata.raw  # contains fileId, url, etc.
     except Exception as e:

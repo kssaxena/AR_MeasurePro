@@ -1,9 +1,18 @@
 import { Scale, Ruler } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { ImageCapture } from "./ImageCapture";
 import { FetchData } from "@/services/FetchFromAPI";
 import { useSelector } from "react-redux";
+import { Bar } from "recharts";
+import {
+  BarChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 
 export function MeasureDisplay() {
   const [error, setError] = useState("");
@@ -62,7 +71,62 @@ export function MeasureDisplay() {
     }
   };
 
-  console.log(measurement);
+  const accuracyChartData = measurementResult.map((item, idx) => ({
+    name: `Object ${idx + 1}`,
+    Accuracy: item.Accuracy,
+  }));
+
+  const areaChartData = measurementResult.map((item, idx) => ({
+    name: `Object ${idx + 1}`,
+    Area: item.Area,
+  }));
+
+  // const [barData, setBarData] = useState({
+  //   labels: [],
+  //   datasets: [
+  //     {
+  //       label: "Accuracy",
+  //       data: [],
+  //       backgroundColor: "#8E44AD",
+  //     },
+  //   ],
+  // });
+
+  // useEffect(() => {
+  //   if (!measurementResult || measurementResult.length === 0) return;
+
+  //   // Get months
+  //   const months = [
+  //     "0",
+  //     "10",
+  //     "20",
+  //     "30",
+  //     "40",
+  //     "50",
+  //     "60",
+  //     "70",
+  //     "80",
+  //     "90",
+  //     "100",
+  //   ];
+
+  //   // Initialize counts
+  //   const accuracyArray = measurementResult?.map((item) => item.Accuracy) || [];
+  //   console.log(accuracyArray);
+
+  //   setBarData({
+  //     labels: accuracyArray.map((_, idx) => `Object ${idx + 1}`),
+  //     datasets: [
+  //       {
+  //         label: "Accuracy",
+  //         data: accuracyArray,
+  //         backgroundColor: "#8E44AD",
+  //       },
+  //     ],
+  //   });
+  // }, [measurementResult]);
+
+  console.log(measurementResult);
 
   return (
     <div className="flex flex-col items-center justify-center p-6">
@@ -114,6 +178,9 @@ export function MeasureDisplay() {
           </h1>
           {measurement && (
             <div className="flex flex-col gap-5">
+              <div className="w-fit h-fit object-cover">
+                <img src={measurement?.preview_image_url} />
+              </div>
               <h1 className="text-lg">
                 Average Accuracy: {measurement?.average_accuracy} %
               </h1>
@@ -121,6 +188,26 @@ export function MeasureDisplay() {
                 Total Objects Detected: {measurement?.total_objects}
               </h1>
               <h1 className="text-lg">Calibration Factor: 10.00 pixels/cm</h1>
+              <h1>Accuracy Comparison Chart 👇</h1>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={accuracyChartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="Accuracy" fill="#8E44AD" />
+                </BarChart>
+              </ResponsiveContainer>
+              <h1>Area Comparison Chart 👇</h1>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={areaChartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="Area" fill="#27AE60" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           )}
           <div>

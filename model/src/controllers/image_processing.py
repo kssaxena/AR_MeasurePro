@@ -192,9 +192,10 @@ def process_image(image_path, pixels_per_cm=10.0):
     cv2.imwrite(processed_image_path, cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR))
 
     # ---- Upload to ImageKit ----
-    upload_result = upload_image(processed_image_path, f"preview_{filename}", folder_structure="users")
-    print(upload_result)
-    imagekit_url = upload_result["url"]
+    # print("Upload Print: " ,processed_image_path,f"preview_{filename}")
+    # upload_result = upload_image(processed_image_path, f"preview_{filename}", folder_structure="users")
+    # print("upload_result",upload_result)
+    # imagekit_url = upload_result["url"]
 
     return {
         "total_objects": detected_objects,
